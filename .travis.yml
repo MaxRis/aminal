@@ -1,37 +1,39 @@
 language: go
 matrix:
   include:
-    - os: linux
-      dist: xenial
-      go: 1.10.x
-    - os: linux
-      dist: xenial
-      go: 1.11.x
-    - os: linux
-      dist: xenial
-      go: master
-    - os: osx
-      go: 1.10.x
-    - os: osx
-      go: 1.11.x
-    - os: osx
-      go: master
+  - os: linux
+    dist: xenial
+    go: 1.10.x
+  - os: linux
+    dist: xenial
+    go: 1.11.x
+  - os: linux
+    dist: xenial
+    go: master
+  - os: osx
+    go: 1.10.x
+  - os: osx
+    go: 1.11.x
+  - os: osx
+    go: master
   allow_failures:
   - go: master
   fast_finish: true
 go_import_path: github.com/liamg/aminal
 before_install:
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get install -y xorg-dev libgl1-mesa-dev
-  gcc-multilib gcc-mingw-w64-x86-64 xvfb vttest && go get github.com/mitchellh/gox; fi
+  gcc-multilib gcc-mingw-w64-x86-64 xvfb vttest && go get github.com/mitchellh/gox;
+  fi
 script:
 - go get
-- if [[ $TRAVIS_OS_NAME == 'linux' ]]; then xvfb-run --server-args="-screen 0 1024x768x24" make test; else make test; fi
+- if [[ $TRAVIS_OS_NAME == 'linux' ]]; then xvfb-run --server-args="-screen 0 1024x768x24"
+  make test; else make test; fi
 - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then make build-darwin-native-travis; fi
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then make build-linux-travis; fi
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then make windows-cross-compile-travis; fi
 env:
   global:
-  - secure: m5q2Ac42MTd7h/watEeyxTTWS40DXzAbz/8tFFYYUbbiSD0fSZA9pP5KZU8/cXx7Q0DkUGs+yLuClDXQrQSbgHc89+O15Yw9RZfNMSXF0L7w5VdxGt4Cr+AdTb2ypnc6Mm05X/MCWtTdWl0fZMWDWhYWO8iylBLMd1fQfoZqBbG2g6p8ZEiz8cFAb2neJXZCvgfQqGuI0dpL2q2FTsQnidAkAs3ZGDDLMUMFyGD+lX+3bVymNaKvYaFmtqbSjy9K5kNB5K0yX7j2HZUxdqVJvKlVc9d62spaISRA+E5eglN04xSmVGxBQpkAsl0OxrygKr+BZApV23sZzmgvKCc63KCYFgN35pyXRS16hK+ZBlYWKmlAGpR0zxRhDsnnQqKkwnGMXErWhrsBC6172Pwrc/Vsl154DjmobHuy2yeEAZYQm4fbOjaeX83m2dmdXm3xjUek01E74jseREpviRK5y2pYznPLGNO0zLkC/JuQhSVjE/TIkSSZkY7HIBH4HAtaQyBX6NJdbWp28HxoEj7vv5l59j5QT58io1+VC6uNg/EFWl15kQJcdRc2nXTSVccPtRRtzUT+mIsQTujf2xvHnLgt5Oe04yY3EUxYifvDhaeyCMCJeZ2vtXX3D1Ic5GZav8ZbCy+5+ey63IukIQgfZJoIb5svl+n9s/KYMmif1EY=
+  - secure: ZaxdU6ianK/ApGgThVaT3KyDrVKteWW7iTxmObxq/QynFcF9JlVPKBZeBUDEUyvLYAg62KifdXZVBD+fFOwB+3/yfK6fYjiX1ZELqK9wYkMjpPEmhyoxXpCzWAJXmoZ7HJKo6rNXj7KCmcgKACNBMP5dVyAenwiDUAIt/GvrFjv2kjP3LvncNaxqVP3viSTgDyKm/Q5oAXiwB4RorjB6xRc+46kRSUkzZJ0JjqY69H5iw278t/BRDfVaifCrc+Nct3Qbu+lZiVCDnwZ5cvdoYCplr6fasD4rWhbS21uSdF+0nPjRw10y3d4EkZ6MIX4Y1eOVsd2VtmmYuDXBLhp052siB6aAko3JZPTxuvsk+5ZnusQxaJlozJGBG1aDMoNuW1V0qO1Jx9VKO2rSB0yF6F0LP2Xk7FvjwfpPiEoTRb4l/IQ64UEVRa8PYy7MiZxdanbcaNO7i5PD6yVvEU/UxWcHWZs86axDzQHnNDonSY56wxQhg99BOjSGfwgvzc+ujoNuJvlqDhj9sfgVd47FlWLyuugy9kmGIpk5Rsz7s9E5Q0PT2BWmw8XMgeeAb7CK3oEXLoGtEahnNSd/3gcXFe+4GI9lz7eOMc7l1vyfmnjcKFCAqog5IdmhA7lnAN3cThYyIRaNEraKNgFf35ga92d4in1DRlshfQhqGeJ64wI=
 before_deploy:
   - export CHANGELOG=$(git log $(git describe --abbrev=0 --tags "${TRAVIS_TAG}^")..$TRAVIS_TAG --pretty=format:'<li> <a href="http://github.com/liamg/aminal/commit/%H">view commit &bull;</a> %s</li> ' --reverse | while read line; do echo -n "$line "; done)
 deploy:
@@ -39,12 +41,12 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: UZFpKKd7Qu0V+hpSrMv2yxeEeynHowRQTiojL0hJIbe6G4eNHqCuZdfULL5bgcHtLfo1OSAtQTVfI4rr/CxNM31zAu+NTowuDgb9ISggfULTOOsI5WVzK6YNXwYHa3a0wOrhnXcb09Rb+/YGjoT+16uqDk9oiyNvwlOUpJkSMaMfN7fg1s/XVev8JnpMu6+sJ7k+EidI94YT2jn/VykUE8XzaqjKJro3jku++hBBJh5tePXcsOEdXCQwbtH9ypsZpjULILmb47rE0ntqvBHvyr8ekCH2Mosxa+WG36YmZizUYdRdTB/tIXiRW6dGoWpYGFijzXsEdam5N+1dikcK1qpdmZzmYm/vKHuPJbkl7Cb9wElzXvWxhU5x395DFOvT28yeDTrVJ+eEwysy7W0ayhjt6N2C3zbHoAjihqzVf+idkoFULrdOYnyGNiubqwJoLM/togB4GlTVvo012N0Fdsm+zor4gM6k3hALaRuhjAIJ2+WSR8F/hJpFKpcmVw/o598zPiJAqqMyNk8OxN6om192bqCKqIloHF0r6tbQBZqEE7X814RSg8k/M2brVn9pyVWNuwPZWUyaVb36IGppo5zYtqBDVAwOE3zGWys996O71HQqByi1jBLK232bu7pdA+W+0rpPqmcdcnZP2DPvZOVMNquLEC1kdpRFwmSrDmg=
-  name: "Aminal $TRAVIS_TAG"
-  body: ${CHANGELOG}
+  name: Aminal $TRAVIS_TAG
+  body: "${CHANGELOG}"
   file:
-    - bin/darwin/aminal-darwin-amd64
-    - bin/linux/aminal-linux-amd64
-    - bin/windows/aminal-windows-amd64.exe
+  - bin/darwin/aminal-darwin-amd64
+  - bin/linux/aminal-linux-amd64
+  - bin/windows/aminal-windows-amd64.exe
   on:
     repo: MaxRis/aminal
     tags: true
