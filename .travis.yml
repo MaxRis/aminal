@@ -27,7 +27,9 @@ before_install:
 - |
   MY_TAG="$( git describe --exact-match "$(git rev-parse HEAD)" 2>/dev/null )"
   if [ -z "$MY_TAG" ] ; then
-    echo "Variable is empty"
+    echo "Variable is empty, giong to try to push a tag..."
+    git tag -a Nightly1 -m "Nightly Build"
+    git push origin Nightly1
   else
     echo "MY_TAG=$MY_TAG"
   fi
