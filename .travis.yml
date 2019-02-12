@@ -49,7 +49,7 @@ deploy:
       condition: "$TRAVIS_GO_VERSION =~ ^1\\.11"
   - provider: script
     skip_cleanup: true
-    script: "./run.sh"
+    script: "./ci/push-nightly-tag.sh"
     on:
       all_branches: true
       condition: "$TRAVIS_GO_VERSION =~ ^1\\.11 && $TRAVIS_OS_NAME == 'linux'"
