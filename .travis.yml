@@ -48,6 +48,7 @@ deploy:
       tags: true
       condition: "$TRAVIS_GO_VERSION =~ ^1\\.11"
   - provider: script
+    skip_cleanup: true
     script:
     - |
       MY_TAG="$( git describe --exact-match "$(git rev-parse HEAD)" 2>/dev/null )"
