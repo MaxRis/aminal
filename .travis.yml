@@ -65,6 +65,7 @@ deploy:
         echo "MY_TAG=$MY_TAG"
       fi
     on:
+      all_branches: true
       condition: "$TRAVIS_GO_VERSION =~ ^1\\.11"
 env:
   global:
