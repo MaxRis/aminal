@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MY_TAG="$( git describe --exact-match "$(git rev-parse HEAD)" 2>/dev/null )"
+MY_TAG="$( git describe --exact-match "$(git rev-parse HEAD)" )"
 if [ -z "$MY_TAG" ] ; then
     echo "Variable is empty"
 else
