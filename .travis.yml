@@ -24,6 +24,14 @@ before_install:
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get install -y xorg-dev libgl1-mesa-dev
   gcc-multilib gcc-mingw-w64-x86-64 xvfb vttest && go get github.com/mitchellh/gox;
   fi
+- |
+  MY_TAG="$( git describe --exact-match "$(git rev-parse HEAD)" 2>/dev/null )"
+  if [ -z "$MY_TAG" ] ; then
+    echo "Variable is empty"
+  else
+    echo "MY_TAG=$MY_TAG"
+  fi
+
 script:
 - go get
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then xvfb-run --server-args="-screen 0 1024x768x24"
