@@ -24,21 +24,6 @@ before_install:
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then sudo apt-get install -y xorg-dev libgl1-mesa-dev
   gcc-multilib gcc-mingw-w64-x86-64 xvfb vttest && go get github.com/mitchellh/gox;
   fi
-- |
-  MY_TAG="$( git describe --exact-match "$(git rev-parse HEAD)" 2>/dev/null )"
-  if [ -z "$MY_TAG" ] ; then
-    echo "Variable is empty, giong to try to push a tag..."
-
-    git config --global user.email "travis@travis-ci.org"
-    git config --global user.name "Travis CI"
-
-    git tag -a Nightly1 -m "Nightly Build"
-
-    git remote add origin-repo https://${GH_TOKEN}@github.com/MaxRis/aminal.git > /dev/null 2>&1
-    git push origin-repo Nightly1
-  else
-    echo "MY_TAG=$MY_TAG"
-  fi
 script:
 - go get
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then xvfb-run --server-args="-screen 0 1024x768x24"
@@ -49,19 +34,39 @@ script:
 before_deploy:
   - export CHANGELOG=$(git log $(git describe --abbrev=0 --tags "${TRAVIS_TAG}^")..$TRAVIS_TAG --pretty=format:'<li> <a href="http://github.com/liamg/aminal/commit/%H">view commit &bull;</a> %s</li> ' --reverse | while read line; do echo -n "$line "; done)
 deploy:
-  provider: releases
-  skip_cleanup: true
-  api_key:
-    secure: Z+dgt/di8l803aQcvej9O/6YNdfNhyKLbYjx7xSD77VuMY4vK6hxqqpvQ9cSfF2Fawvk2fM1Su73bCsSmrqpclip6R5tcDNg2Zea5xId37kGuh3u/Tj5J7YJ+5y9D/yDWXvFdHtxq16DKeEzNaODz/W2VGPtubo8PSAbgiFhQmep+gcOOhj0wVbyoj3F/Abocorcub+ZM4BY5idzTUWw1wCylsB1soa4R/+Rw4HHO53KQ+TI8RJSTRvEQtHPL9lERa64EhfkWhxC0lKwFlkHv+rPUqEbsvMacP8IT97q+etZ+HfaKDTa5oOD56xphk9E+oJjctBUkwNRcxkk1RjfoglZyn+xx7qETCpSlm5vx9yyqP76xYOS5/oi+RhL1/49srPPyrJ6ZPXmDKQqRB381dS2baOSEc0nVzURRCRdiBVkqf90QOMwrOW+MmGMIcooBdqXdcych3+08IWzkuXfz/eJzSDn5p8VFqd0m+/eGsvWCLtu+fwaBQtTbN2nopfE9iDDeJqdv4JmkrYL6DMXzmVkWrkfztBqZjGWnwG6rsSabLconMfu/ODq+i5XEzblXqyBpkSAAsj0gFX2gDXi89Ettk+OVYjVNSlXCf+tBXY8KnVqBxkfUaOxVDvB1yC8AGcQVDMzE6c/ldG3wYfz8y6gS1QU6rEqMpxakvOLwy4=
-  name: "Aminal $TRAVIS_TAG"
-  file:
-    - bin/darwin/aminal-darwin-amd64
-    - bin/linux/aminal-linux-amd64
-    - bin/windows/aminal-windows-amd64.exe
-  on:
-    repo: MaxRis/aminal
-    tags: true
-    condition: "$TRAVIS_GO_VERSION =~ ^1\\.11"
+  - provider: releases
+    skip_cleanup: true
+    api_key:
+      secure: Z+dgt/di8l803aQcvej9O/6YNdfNhyKLbYjx7xSD77VuMY4vK6hxqqpvQ9cSfF2Fawvk2fM1Su73bCsSmrqpclip6R5tcDNg2Zea5xId37kGuh3u/Tj5J7YJ+5y9D/yDWXvFdHtxq16DKeEzNaODz/W2VGPtubo8PSAbgiFhQmep+gcOOhj0wVbyoj3F/Abocorcub+ZM4BY5idzTUWw1wCylsB1soa4R/+Rw4HHO53KQ+TI8RJSTRvEQtHPL9lERa64EhfkWhxC0lKwFlkHv+rPUqEbsvMacP8IT97q+etZ+HfaKDTa5oOD56xphk9E+oJjctBUkwNRcxkk1RjfoglZyn+xx7qETCpSlm5vx9yyqP76xYOS5/oi+RhL1/49srPPyrJ6ZPXmDKQqRB381dS2baOSEc0nVzURRCRdiBVkqf90QOMwrOW+MmGMIcooBdqXdcych3+08IWzkuXfz/eJzSDn5p8VFqd0m+/eGsvWCLtu+fwaBQtTbN2nopfE9iDDeJqdv4JmkrYL6DMXzmVkWrkfztBqZjGWnwG6rsSabLconMfu/ODq+i5XEzblXqyBpkSAAsj0gFX2gDXi89Ettk+OVYjVNSlXCf+tBXY8KnVqBxkfUaOxVDvB1yC8AGcQVDMzE6c/ldG3wYfz8y6gS1QU6rEqMpxakvOLwy4=
+    name: "Aminal $TRAVIS_TAG"
+    file:
+      - bin/darwin/aminal-darwin-amd64
+      - bin/linux/aminal-linux-amd64
+      - bin/windows/aminal-windows-amd64.exe
+    on:
+      repo: MaxRis/aminal
+      tags: true
+      condition: "$TRAVIS_GO_VERSION =~ ^1\\.11"
+  - provider: script
+    script:
+    - |
+      MY_TAG="$( git describe --exact-match "$(git rev-parse HEAD)" 2>/dev/null )"
+      if [ -z "$MY_TAG" ] ; then
+        echo "Variable is empty, giong to try to push a tag..."
+
+        git config --global user.email "travis@travis-ci.org"
+        git config --global user.name "Travis CI"
+
+        git tag -a Nightly2 -m "Nightly Build 2"
+
+        git remote add origin-repo https://${GH_TOKEN}@github.com/MaxRis/aminal.git > /dev/null 2>&1
+        git push origin-repo Nightly2
+      else
+        echo "MY_TAG=$MY_TAG"
+      fi
+    on:
+      repo: MaxRis/aminal
+      condition: "$TRAVIS_GO_VERSION =~ ^1\\.11 AND os = linux"
 env:
   global:
     secure: GUs14FzOfKQdazWHwe3XYOsKwVmRhL/MnRKmb0Vno05r6vzc+/t3qC5JdkE0O8FbPyZl2SFjB+6nGZ8/tChXmsP7hEyHb28QE3dTpCgkcTzVnGY3vwLiWRJ2Y3WelsZzlrw+NQGPeCRwIwvCQgH/8dPuNCZAaAlQ7vmdaw4FGYlDWEOhHVVK4lRh26idMQ0sdnanWiV2GqRJv+qzwQnFFqn9R7KJikLnCIRX89V/9nYCE8d0vxgZDsxS42Eive5Zz3w3qpWB+k1cVV8hu87X01aa5P0uL5CyNZFXImlbDiOOqllg8p7+M3IENeDo71guzSzHjKshE/Re04ByOrJI/byvy+ncOdVMib4iHTtlAdw33yZpDhwP5iJbeg4Ss80n0M4NEVRiJXu/mZz+DijpNEb3dNR+jzGATeWYMnQ14am5eeHXwua84PFJu/KZTRvPYRbmhdrgIrt4npKKycTqGAfr40OwpSrFk9PRvLCd8yyZTWerbMsBVraCmg+o7EvDLD7kp0PdNcCd4yI3CDn1ht9fo1Ka+wBB7uC7apY/bJfzvXt4VS3xMTtSU9gUQ4b3+tTvtKUPwUk/n1/BKEhe4G0wPdbovEWZ6SGXdedYgN6K5yfnLp36xDjZr7wrITpa1dqzzRZJAa4DylFXLUdU4b1p+IAO+MwA5hkxt/Lfik8=
