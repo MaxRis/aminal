@@ -14,7 +14,7 @@ if [ -z "$MY_TAG" ] ; then
   echo "New generated tag: $NEW_TAG"
 
   git remote add origin-repo https://${GH_TOKEN}@github.com/MaxRis/aminal.git > /dev/null 2>&1
- # git push origin-repo $NEW_TAG
+  git push origin-repo $NEW_TAG
 else
   echo "MY_TAG=$MY_TAG"
 fi
