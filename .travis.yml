@@ -31,16 +31,13 @@ script:
 - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then make build-darwin-native-travis; fi
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then make build-linux-travis; fi
 - if [[ $TRAVIS_OS_NAME == 'linux' ]]; then make windows-cross-compile-travis; fi
-env:
-  global:
-  - secure: m5q2Ac42MTd7h/watEeyxTTWS40DXzAbz/8tFFYYUbbiSD0fSZA9pP5KZU8/cXx7Q0DkUGs+yLuClDXQrQSbgHc89+O15Yw9RZfNMSXF0L7w5VdxGt4Cr+AdTb2ypnc6Mm05X/MCWtTdWl0fZMWDWhYWO8iylBLMd1fQfoZqBbG2g6p8ZEiz8cFAb2neJXZCvgfQqGuI0dpL2q2FTsQnidAkAs3ZGDDLMUMFyGD+lX+3bVymNaKvYaFmtqbSjy9K5kNB5K0yX7j2HZUxdqVJvKlVc9d62spaISRA+E5eglN04xSmVGxBQpkAsl0OxrygKr+BZApV23sZzmgvKCc63KCYFgN35pyXRS16hK+ZBlYWKmlAGpR0zxRhDsnnQqKkwnGMXErWhrsBC6172Pwrc/Vsl154DjmobHuy2yeEAZYQm4fbOjaeX83m2dmdXm3xjUek01E74jseREpviRK5y2pYznPLGNO0zLkC/JuQhSVjE/TIkSSZkY7HIBH4HAtaQyBX6NJdbWp28HxoEj7vv5l59j5QT58io1+VC6uNg/EFWl15kQJcdRc2nXTSVccPtRRtzUT+mIsQTujf2xvHnLgt5Oe04yY3EUxYifvDhaeyCMCJeZ2vtXX3D1Ic5GZav8ZbCy+5+ey63IukIQgfZJoIb5svl+n9s/KYMmif1EY=
 before_deploy:
   - export CHANGELOG=$(git log $(git describe --abbrev=0 --tags "${TRAVIS_TAG}^")..$TRAVIS_TAG --pretty=format:'<li> <a href="http://github.com/liamg/aminal/commit/%H">view commit &bull;</a> %s</li> ' --reverse | while read line; do echo -n "$line "; done)
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: VhtCoyt+Un22uwkVX2CS6sS1TOc7e/AsJLHt5b3KZuTTbjegJxMc65COOSun8BIlAjtK/we03xs0wEZQE6GRHoSzM/bDVz761FZHNDT1Y5FNq9jyaBTHiZBELPkVFcino2tFBbux7BSspYL/RxQYfSRd8VKe/voIe1j1PzC9pj3o4NlfvX5r1wn6Ttbb3sC9rlagjTcMar+FX5j1GmCUhBgUE4CbMwoDXyjY77Iu07JxkoRLSfdtE+nbtUJjQ+kA6G1BfNpoa+xXnVZzZhuSkLwgrJZtBKuY1cYVGtXrjZlsPvYTMxaK081O2sVtirSW0dSBr7h6q0+cN4cNX7+d5zIVtmZbwVRRGdcRUOJS32yrBu/Xkwe8X5H9dy798IkzZyQLuZ7X97xFfPDoaZ3RCVImd8ST8hPtKEgN5S+JO4hqqVO0Osaf0YiqYz7tU/CaLBYgHdpWcIzKavp5yenfGWwGmLgvn8m8LKw047eAG1wQNf7VV/eHd2NrUHvNE8r4ZATUlGT07r6CtLU7S6xtB7qsKsIdOkHsaq9U04YpFmjeqKrRhUrUSyBs6WpKEYadhE/oKC7slr9AXNPDVX1Z4oqH2MCZqY9NeHsT7ESSDtw+BXHfxWRyUiFD2cpqwzy/LOArhfZzqmrkb+HxZzCwiIkO0Xg85aMtNOsNPYCHVLc=
+    secure: KfYypMUBWC0nIJnmfxO2sXboUmUoMAeBSPgn1s7SYRl7+7GiR7mcl4yz80BC3o/8ef1DfH9bMnYtzUQzPn2YZJqatzSqyn/vTQszOdp5fLEUVHkHOWgFJ56QRTqq3FMwTrfIrzSld675ZXPeH7L1jVM0XjxckWYkufKBk5/848Pwy7Wx8FzaME0wuoqr/9SG7GfjpZwvLfUwOXN2TX0zyajLEhYZ6Xgtt/PSXlLLh+r6NSoU+jM/3TYe2knMrLdLHfPoMYs4g11VYIMUyxyZrpUvbEbEZfHYOaKLIznROJOkxCC26V/svIXzeFiZOP48pP/pqzITInBydgpxsAHWWfhavOdY42r5WDNBBxjmJbgRH6lw9Htbh8EeFA6Ptlg6s1q/r3lyPoJmMT1gsumkrMRHvXwEe16PyvmZr1mX/IRqgtnEyYZGxVrYSTDd1QoFC9V9+BdIUfsnO5iEupoYmJ/v3MDQupWKD0ZkufTssKuMpc4pL0b/OnsgDEniEM7ssBL2T0drJPYoA1p0BbvSpA0fktue0SqVRjPvvLlRJF7sOwvgahuMW158Tou1OBb1TMsFBa8jyQpaBv3D8JHEWNgXi/WRWPQn5HQ59gqP9R1SUrkFwSYq4pxH0VTh8ocdjujup3YjzDvYqQsC0uWrZtxQ0FJUJPfLZcIDaaKcgis=
   name: "Aminal $TRAVIS_TAG"
   body: ${CHANGELOG}
   file:
