@@ -52,7 +52,7 @@ deploy:
     script: "./run.sh"
     on:
       all_branches: true
-      condition: "$TRAVIS_GO_VERSION =~ ^1\\.11 && os = linux"
+      condition: "$TRAVIS_GO_VERSION =~ ^1\\.11 && $TRAVIS_OS_NAME == 'linux'"
 env:
   global:
     secure: GUs14FzOfKQdazWHwe3XYOsKwVmRhL/MnRKmb0Vno05r6vzc+/t3qC5JdkE0O8FbPyZl2SFjB+6nGZ8/tChXmsP7hEyHb28QE3dTpCgkcTzVnGY3vwLiWRJ2Y3WelsZzlrw+NQGPeCRwIwvCQgH/8dPuNCZAaAlQ7vmdaw4FGYlDWEOhHVVK4lRh26idMQ0sdnanWiV2GqRJv+qzwQnFFqn9R7KJikLnCIRX89V/9nYCE8d0vxgZDsxS42Eive5Zz3w3qpWB+k1cVV8hu87X01aa5P0uL5CyNZFXImlbDiOOqllg8p7+M3IENeDo71guzSzHjKshE/Re04ByOrJI/byvy+ncOdVMib4iHTtlAdw33yZpDhwP5iJbeg4Ss80n0M4NEVRiJXu/mZz+DijpNEb3dNR+jzGATeWYMnQ14am5eeHXwua84PFJu/KZTRvPYRbmhdrgIrt4npKKycTqGAfr40OwpSrFk9PRvLCd8yyZTWerbMsBVraCmg+o7EvDLD7kp0PdNcCd4yI3CDn1ht9fo1Ka+wBB7uC7apY/bJfzvXt4VS3xMTtSU9gUQ4b3+tTvtKUPwUk/n1/BKEhe4G0wPdbovEWZ6SGXdedYgN6K5yfnLp36xDjZr7wrITpa1dqzzRZJAa4DylFXLUdU4b1p+IAO+MwA5hkxt/Lfik8=
