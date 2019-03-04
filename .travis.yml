@@ -39,7 +39,7 @@ deploy:
     skip_cleanup: true
     api_key:
       secure: Z+dgt/di8l803aQcvej9O/6YNdfNhyKLbYjx7xSD77VuMY4vK6hxqqpvQ9cSfF2Fawvk2fM1Su73bCsSmrqpclip6R5tcDNg2Zea5xId37kGuh3u/Tj5J7YJ+5y9D/yDWXvFdHtxq16DKeEzNaODz/W2VGPtubo8PSAbgiFhQmep+gcOOhj0wVbyoj3F/Abocorcub+ZM4BY5idzTUWw1wCylsB1soa4R/+Rw4HHO53KQ+TI8RJSTRvEQtHPL9lERa64EhfkWhxC0lKwFlkHv+rPUqEbsvMacP8IT97q+etZ+HfaKDTa5oOD56xphk9E+oJjctBUkwNRcxkk1RjfoglZyn+xx7qETCpSlm5vx9yyqP76xYOS5/oi+RhL1/49srPPyrJ6ZPXmDKQqRB381dS2baOSEc0nVzURRCRdiBVkqf90QOMwrOW+MmGMIcooBdqXdcych3+08IWzkuXfz/eJzSDn5p8VFqd0m+/eGsvWCLtu+fwaBQtTbN2nopfE9iDDeJqdv4JmkrYL6DMXzmVkWrkfztBqZjGWnwG6rsSabLconMfu/ODq+i5XEzblXqyBpkSAAsj0gFX2gDXi89Ettk+OVYjVNSlXCf+tBXY8KnVqBxkfUaOxVDvB1yC8AGcQVDMzE6c/ldG3wYfz8y6gS1QU6rEqMpxakvOLwy4=
-    name: "Aminal $TRAVIS_TAG"
+    name: "Aminal BUILD $TRAVIS_TAG"
     body: ${CHANGELOG}
     file:
       - bin/darwin/aminal-darwin-amd64
